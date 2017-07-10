@@ -1,0 +1,8 @@
+export WORKINGDIR=${HOME}/Code
+export WORKON_HOME=${HOME}/virtual_envs
+export EDITOR=$([ -f /usr/local/bin/nvim ] && echo "$(which nvim)" ||  echo "$(which vi)")
+export MYBIN=${HOME}/bin
+export GOROOT=${MYBIN}/GO/1.8
+export PYCHARM_HOME=${MYBIN}/pycharm
+export PATH=${MYBIN}:${PYCHHARM_HOME}/bin:$PATH:${GOROOT}/bin
+export GOPATH=${WORKINGDIR}/GO

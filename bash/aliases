@@ -1,0 +1,16 @@
+if [ -x /usr/bin/dircolors ]; then
+    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+    alias ls='ls --color=auto'
+    alias grep='grep --color=auto'
+    alias fgrep='fgrep --color=auto'
+    alias egrep='egrep --color=auto'
+    alias ll="ls -l"
+fi
+
+alias update="sudo apt update; sudo apt -y upgrade; sudo apt -y dist-upgrade; sudo apt -y autoremove"
+alias cleanpycs="find . -name '*.pyc' -delete"
+alias env="/usr/bin/env | sort"
+alias pipupdate="pip install pip --upgrade; pip freeze --local | grep -v '^\-e' | cut -d = -f 1 | xargs -n1 pip install -U"
+alias nv="$EDITOR"
+alias tmux="tmux attach || tmux new"
+alias mount="mount | column -t"

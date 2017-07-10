@@ -1,0 +1,5 @@
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+[ -f ~/dotfiles/bash/environment ] && source ~/dotfiles/bash/environment
+[ -f ~/dotfiles/bash/aliases ] && source ~/dotfiles/bash/aliases
+[ -f ~/dotfiles/bash/prompt ] && source ~/dotfiles/bash/prompt
+[ -f /usr/local/bin/virtualenvwrapper.sh ] && source /usr/local/bin/virtualenvwrapper.sh
