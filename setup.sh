@@ -8,6 +8,7 @@ FZF_DIR=${HOME}/.fzf
 VCPROMPT_URL="https://github.com/djl/vcprompt/raw/master/bin/vcprompt"
 FZF_URL="https://github.com/junegunn/fzf.git"
 
+# Making the right directories, but only if needed!
 if [ ! -d ${CONFIG_DIR} ]; then
   mkdir ${CONFIG_DIR}
 fi
@@ -21,6 +22,9 @@ if [ ! -d ${NVIM_DIR} ]; then
 fi
 ln -s ${DOTFILES_DIR}/neovim ${NVIM_DIR}
 
+# Vimrc/NVimrc connection
+[ ! -f ${HOME}/.vimrc ] && ln -s ${NVIM_DIR}/init.vim ${HOME}/.vimrc
+[ ! -f ${HOME}/.nvimrc ] && ln -s ${NVIM_DIR}/init.vim ${HOME}/.nvimrc
 
 # FZF Stuff
 if [ ! -d  ${FZF_DIR} ]; then
@@ -29,21 +33,13 @@ if [ ! -d  ${FZF_DIR} ]; then
 fi
 
 # VCPrompt Stuff
-if [ -f ${BIN_DIR}/vcprompt ]; then
+if [ ! -f ${BIN_DIR}/vcprompt ]; then
   curl -sL ${VCPROMPT_URL} > ${BIN_DIR}/vcprompt
   chmod 755 ${BIN_DIR}/vcprompt
 fi
 
 
-# Vimrc/NVimrc connection
-[ ! -f ${HOME}/.vimrc ] && ln -s ${NVIM_DIR}/init.vim ${HOME}/.vimrc
-[ ! -f ${HOME}/.nvimrc ] && ln -s ${NVIM_DIR}/init.vim ${HOME}/.nvimrc
-
-
 # Bash Fixups
-
 if [ ! -z "$DOTFILES_SETUP" ]; then
   cat ${DOTFILES_DIR}/bash/bashrc >> ${HOME}/.bashrc
 fi
-
-
