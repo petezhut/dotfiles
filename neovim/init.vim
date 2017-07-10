@@ -39,7 +39,7 @@ set clipboard+=unnamed
 " My Variables...
 let g:Author = "Jason L McFarland"
 let g:Nickname = 'the_qe_viking'
-let g:Email = 'jmcfarland@cloudera.com'
+let g:Email = 'someone@somewhere.com'
 
 " Since we can't all be the captain, some of us shall be crew
 let mapleader = ","                    

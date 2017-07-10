@@ -1,1 +1,4 @@
 .rope*
+neovim/autoload
+neovim/plugged
+
