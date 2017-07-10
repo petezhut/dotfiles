@@ -20,7 +20,7 @@ fi
 if [ ! -d ${NVIM_DIR} ]; then
   mkdir -p ${NVIM_DIR}
 fi
-ln -s ${DOTFILES_DIR}/neovim ${NVIM_DIR}
+[ ! -f ${NVIM_DIR}/init.vim ] && ln -s ${DOTFILES_DIR}/neovim/init.vim ${NVIM_DIR}/init.vim
 
 # Vimrc/NVimrc connection
 [ ! -f ${HOME}/.vimrc ] && ln -s ${NVIM_DIR}/init.vim ${HOME}/.vimrc
