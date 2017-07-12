@@ -7,19 +7,17 @@ BIN_DIR=${HOME}/bin
 FZF_DIR=${HOME}/.fzf
 VCPROMPT_URL="https://github.com/djl/vcprompt/raw/master/bin/vcprompt"
 FZF_URL="https://github.com/junegunn/fzf.git"
+VIM_PLUG_URL="https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
+
+# Create a new SSH Key
+cat /dev/zero | ssh-keygen -q -N ""
 
 # Making the right directories, but only if needed!
-if [ ! -d ${CONFIG_DIR} ]; then
-  mkdir ${CONFIG_DIR}
-fi
-if [ ! -d ${BIN_DIR} ]; then
-  mkdir -p ${BIN_DIR}
-fi
+[ ! -d ${CONFIG_DIR} ] && mkdir ${CONFIG_DIR}
+[ ! -d ${BIN_DIR} ] && mkdir -p ${BIN_DIR}
 
 # NeoVim Setup
-if [ ! -d ${NVIM_DIR} ]; then
-  mkdir -p ${NVIM_DIR}
-fi
+[ ! -d ${NVIM_DIR} ] && mkdir -p ${NVIM_DIR}
 [ ! -f ${NVIM_DIR}/init.vim ] && ln -s ${DOTFILES_DIR}/neovim/init.vim ${NVIM_DIR}/init.vim
 
 # Vimrc/NVimrc connection
@@ -38,8 +36,11 @@ if [ ! -f ${BIN_DIR}/vcprompt ]; then
   chmod 755 ${BIN_DIR}/vcprompt
 fi
 
-
 # Bash Fixups
-if [ ! -z "$DOTFILES_SETUP" ]; then
-  cat ${DOTFILES_DIR}/bash/bashrc >> ${HOME}/.bashrc
-fi
+[ ! -z "$DOTFILES_SETUP" ] && cat ${DOTFILES_DIR}/bash/bashrc >> ${HOME}/.bashrc
+
+# Add Neovim packages
+source {$HOME}/.bashrc
+curl -fLo ${NVIM_DIR}/autoload/plug.vim --create-dirs ${VIM_PLUG_URL}
+mkvirtualenv -p $(which python2) neovim2 -i neovim && deactivate
+mkvirtualenv -p $(which python3) neovim3 -i neovim && deactivate

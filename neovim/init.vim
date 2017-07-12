@@ -97,7 +97,7 @@ call plug#begin('/home/jmcfarland/.config/nvim/plugged')
     Plug 'Xuyuanp/nerdtree-git-plugin'          " Git plugin for nerdtree
     Plug 'airblade/vim-gitgutter'               " Show git changes
     Plug 'altercation/vim-colors-solarized'     " Solarized stuff
-    Plug 'benekastah/neomake'                   " Syntax checking
+    Plug 'neomake/neomake'                      " Syntax checking
     Plug 'ctrlpvim/ctrlp.vim'                   " Fuzzy file finder
     Plug 'easymotion/vim-easymotion'            " Move more freely
     Plug 'flazz/vim-colorschemes'               " Color schemes for days
@@ -163,14 +163,14 @@ let g:NERDTreeIndicatorMapCustom = {
     \ "Unknown"   : "?"}
 autocmd FileType nerdtree setlocal nolist
 "
-let g:flake8_max_line_length=150
-let g:flake8_ignore="E501,E111,E303"
+" let g:flake8_max_line_length=150
+" let g:flake8_ignore="E501,E111,E303"
 
 " vim-airline {
     " let g:airline_theme='vice'
-    let g:airline_theme='cobalt2'
+    " let g:airline_theme='cobalt2'
     " let g:airline_theme='badwolf'
-    " let g:airline_theme='gruvbox'
+    let g:airline_theme='gruvbox'
     " let g:airline_theme='base16_chalk'
     let g:airline_powerline_fonts = 1
     let g:airline#extensions#tabline#enabled = 1
@@ -189,13 +189,36 @@ let g:flake8_ignore="E501,E111,E303"
 colorscheme vividchalk
 " colorscheme badwolf " I like Doctor Who
 " colorscheme gruvbox
-
+" indent-guides {
+    " let g:indent_guides_start_level = 2
+    " let g:indent_guides_guide_size = 0
+    " let g:indent_guides_enable_on_vim_startup = 1
+" }
 nmap <leader>v :e /home/jmcfarland/.nvimrc<CR>
+
+if has('nvim')
+  " Neovim Termainal
+  nmap <leader>t :sp term://bash<CR>
+  tnoremap <Esc> <C-\><C-n>
+  tnoremap <leader>l ls -al <cr>
+endif
 
 inoremap <silent> <leader>c gc
 
 let g:pymode_options_max_line_length = 120
 let g:pymode_options_colorcolumn = 1
+
+let g:neomake_python_enabled_markers = ['flake8']
+
+" TagBar
+nmap <F8> :TagbarToggle<CR>
+let g:tagbar_autofocus = 1
+let g:tagbar_autoclose = 0
+let g:tagbar_show_linenumbers = 1
+let g:tagbar_left = 1
+let g:tagbar_width = 80
+set statusline+=%{neomake#statusline#QflistStatus('qf:\ ')}%{neomake#statusline#QflistStatus('qf:\ ')}
+
 
 function! PythonStuff()
 " python-mode {
@@ -215,8 +238,7 @@ function! PythonStuff()
     let g:is_virtual_env = $VIRTUAL_ENV
     au BufWritePre *.py normal m`:%s/\s\+$//e ``
     au BufWritePre *.py normal m`:%s/\t/\ \ /e ``
-    " autocmd! BufWritePost * Neomake
-    autocmd! BufWritePost <ESC>:call Flake8()<CR>
+    " autocmd! BufWritePost <ESC>:call Flake8()<CR>
     map <silent> <leader>x <ESC>:w\|!$(which python) %<CR>
     map <silent> <leader>f <ESC>:w\|:call Flake8()<CR>
     set nocindent
@@ -267,6 +289,7 @@ endfunction
 
 nnoremap <leader>1 :call ToggleLongLines()<CR>
 
+autocmd! BufWritePost * Neomake
 autocmd FileType markdown call MarkdownStuff()
 autocmd FileType python call PythonStuff()
 autocmd BufRead,BufNewFile *.py call PythonStuff()
@@ -276,3 +299,18 @@ autocmd BufRead Dockerfile let b:comment_leader = "# "
 autocmd BufRead *.sh call ShellStuff()
 autocmd BufRead *.rs call RustStuff()
 autocmd FileType go call GoStuff()
+
+
+" Workspace Setup
+" ----------------
+function! Systest()
+    " Rough num columns to decide between laptop and big monitor screens
+    let numcol = 2
+
+    sp
+    wincmd k
+    term://bash "cd ~/Code/cmf/systest/"
+    file Systest
+    resize 10
+endfunction
+command! -register Systest call Systest()
