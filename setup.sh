@@ -40,7 +40,7 @@ fi
 [ ! -z "$DOTFILES_SETUP" ] && cat ${DOTFILES_DIR}/bash/bashrc >> ${HOME}/.bashrc
 
 # Add Neovim packages
-source {$HOME}/.bashrc
-curl -fLo ${NVIM_DIR}/autoload/plug.vim --create-dirs ${VIM_PLUG_URL}
-mkvirtualenv -p $(which python2) neovim2 -i neovim && deactivate
-mkvirtualenv -p $(which python3) neovim3 -i neovim && deactivate
+# source {$HOME}/.bashrc
+# curl -fLo ${NVIM_DIR}/autoload/plug.vim --create-dirs ${VIM_PLUG_URL}
+# mkvirtualenv -p $(which python2) neovim2 -i neovim && deactivate
+# mkvirtualenv -p $(which python3) neovim3 -i neovim && deactivate
