@@ -37,7 +37,7 @@ if [ ! -f ${BIN_DIR}/vcprompt ]; then
 fi
 
 # Bash Fixups
-[ ! -z "$DOTFILES_SETUP" ] && cat ${DOTFILES_DIR}/bash/bashrc >> ${HOME}/.bashrc
+[ -z ${DOTFILES_SETUP+x} ] && cat ${DOTFILES_DIR}/bash/bashrc >> ${HOME}/.bashrc
 
 # Add Neovim packages
 # source {$HOME}/.bashrc

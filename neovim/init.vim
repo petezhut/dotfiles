@@ -140,7 +140,7 @@ call plug#end()
 let g:gitgutter_sign_column_always = 1
 
 " NERDTree {
-map <leader>e :NERDTreeToggle<CR>             " Nerdtree really is great, isn't it?
+map <leader>e :NERDTreeToggle<CR>               " Nerdtree really is great, isn't it?
 
 let NERDTreeShowBookmarks=1
 let NERDTreeIgnore=['\.png$','\.py[cd]$','\~$','\.swo$','\.swp$','^\.git$','^\.hg$','^\.svn$','\.bzr$','^\.ropeproject$']
@@ -162,16 +162,9 @@ let g:NERDTreeIndicatorMapCustom = {
     \ "Clean"     : "✔︎",
     \ "Unknown"   : "?"}
 autocmd FileType nerdtree setlocal nolist
-"
-" let g:flake8_max_line_length=150
-" let g:flake8_ignore="E501,E111,E303"
 
 " vim-airline {
-    " let g:airline_theme='vice'
-    " let g:airline_theme='cobalt2'
-    " let g:airline_theme='badwolf'
     let g:airline_theme='gruvbox'
-    " let g:airline_theme='base16_chalk'
     let g:airline_powerline_fonts = 1
     let g:airline#extensions#tabline#enabled = 1
     let g:airline_left_sep='›' " Slightly fancier than '>'
@@ -187,13 +180,7 @@ autocmd FileType nerdtree setlocal nolist
     let g:rainbow_active = 1
 " }
 colorscheme vividchalk
-" colorscheme badwolf " I like Doctor Who
-" colorscheme gruvbox
-" indent-guides {
-    " let g:indent_guides_start_level = 2
-    " let g:indent_guides_guide_size = 0
-    " let g:indent_guides_enable_on_vim_startup = 1
-" }
+
 nmap <leader>v :e /home/jmcfarland/.nvimrc<CR>
 
 if has('nvim')
@@ -217,7 +204,6 @@ let g:tagbar_autoclose = 0
 let g:tagbar_show_linenumbers = 1
 let g:tagbar_left = 1
 let g:tagbar_width = 80
-set statusline+=%{neomake#statusline#QflistStatus('qf:\ ')}%{neomake#statusline#QflistStatus('qf:\ ')}
 
 
 function! PythonStuff()
