@@ -137,7 +137,7 @@ call plug#end()
 " }
 
 " GitGutter!
-let g:gitgutter_sign_column_always = 1
+set signcolumn=yes
 
 " NERDTree {
 map <leader>e :NERDTreeToggle<CR>               " Nerdtree really is great, isn't it?
