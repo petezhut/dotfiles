@@ -82,7 +82,7 @@ else
 endif
     
 if exists('&inccommand')
-    set inccommand=split " Turn on live preview substitute
+  set inccommand=split " Turn on live preview substitute
 endif
 
 " My global command shortcuts
