@@ -230,6 +230,9 @@ function! PythonStuff()
     set nocindent
     " let python_highlight_all=1
     syntax on
+    set shiftwidth=2             " I've been burned by softtabstop and tabstop before      
+    set softtabstop=2            " Set the softtabstop
+    set tabstop=2                " Set the tabstop
 endfunction
 
 function! MarkdownStuff()
