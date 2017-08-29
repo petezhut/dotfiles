@@ -15,4 +15,4 @@ alias pipupdate="pip install pip --upgrade; pip freeze --local | grep -v '^\-e' 
 alias nv="$EDITOR"
 alias tmux="tmux attach || tmux new"
 alias mount="mount | column -t"
-alias ls="$([ -f /usr/local/bin/exa ] && echo "/usr/local/bin/exa" ||  echo "/bin/ls") -l --git"
+alias ls="$([ -f /usr/local/bin/exa ] && echo "/usr/local/bin/exa -lh --git" ||  echo "/bin/ls")"
