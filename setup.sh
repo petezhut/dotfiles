@@ -41,3 +41,6 @@ fi
 
 # Add Neovim packages
 curl -fLo ${NVIM_DIR}/autoload/plug.vim --create-dirs ${VIM_PLUG_URL}
+
+# Adding my flake8 ignore file
+[ ! -f ${CONFIG_DIR}/flake8 ] && ln -s ${DOTFILES_DIR}/flake8 CONFIG_DIR}/flake8
