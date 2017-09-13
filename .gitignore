@@ -1,4 +1,5 @@
 .rope*
 neovim/autoload
 neovim/plugged
+neovim/sessions
 

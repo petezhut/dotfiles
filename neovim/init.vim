@@ -303,3 +303,39 @@ function! Systest()
     resize 10
 endfunction
 command! -register Systest call Systest()
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"" Session
+nnoremap <leader>ss :call MakeSession()<cr>
+nnoremap <leader>sl :call LoadSession()<cr>
+let g:base_session_dir = $HOME . "/.nvim/sessions"
+set ssop-=options       " do not store options (vimrc) in a session
+"" Make and load method to save session per dir
+function! MakeSession()
+    let b:sessiondir = g:base_session_dir . getcwd()
+    " let b:sessiondir = $HOME . "/.nvim/sessions" . getcwd()
+    if (filewritable(b:sessiondir) != 2)
+        exe 'silent !mkdir -p ' b:sessiondir
+        redraw!
+    endif
+    let b:filename = b:sessiondir . '/session.vim'
+    exe "mksession! " . b:filename
+endfunction
+function! LoadSession()
+    let b:sessiondir = g:base_session_dir . getcwd()
+    let b:sessionfile = b:sessiondir . "/session.vim"
+    if (filereadable(b:sessionfile))
+        exe 'source ' b:sessionfile
+    else
+        echo "No session loaded."
+    endif
+
+endfunction
+
+" Auto-commands 
+augroup autosourcing
+    if(argc() == 0)
+        "au VimEnter * nested :call LoadSession() " Uncomment to automatically load session
+        au VimLeave * :call MakeSession()
+    endif
+augroup END
