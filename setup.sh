@@ -2,6 +2,7 @@
 
 DOTFILES_DIR=${HOME}/dotfiles
 CONFIG_DIR=${HOME}/.config
+I3_CONFIG=${CONFIG_DIR}/i3
 NVIM_DIR=${CONFIG_DIR}/nvim
 BIN_DIR=${HOME}/bin
 FZF_DIR=${HOME}/.fzf
@@ -23,6 +24,13 @@ cat /dev/zero | ssh-keygen -q -N ""
 # Vimrc/NVimrc connection
 [ ! -f ${HOME}/.vimrc ] && ln -s ${NVIM_DIR}/init.vim ${HOME}/.vimrc
 [ ! -f ${HOME}/.nvimrc ] && ln -s ${NVIM_DIR}/init.vim ${HOME}/.nvimrc
+
+# Copying my I3 configuration
+[ ! -d ${CONFIG_DIR}/i3 ] && mkdir -p ${CONFIG_DIR}/i3
+[ ! -f ${CONFIG_DIR}/i3/config ] && ln -s ${DOTFILES_DIR}/i3/config ${I3_CONFIG}/config
+
+# Git Config Stuff
+[ ! -f ${HOME}/.gitconfig ] && ln -s ${DOTFILES_DIR}/gitconfig ${HOME}/.gitconfig
 
 # FZF Stuff
 if [ ! -d  ${FZF_DIR} ]; then
