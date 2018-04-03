@@ -124,6 +124,7 @@ call plug#begin('/home/jmcfarland/.config/nvim/plugged')
     Plug 'tpope/vim-unimpaired'                 " Moving around easier
     Plug 'vim-airline/vim-airline'              " Cool ass statusline
     Plug 'vim-airline/vim-airline-themes'       " Airline themes
+    Plug 'fenetikm/falcon'
     Plug 'junegunn/fzf', { 'dir': '/home/jmcfarland/.fzf', 'do': './install --all' }  "Fuzzy Command Line Globbing!
     " Setting vim specific autocomplete
     if has('nvim')
