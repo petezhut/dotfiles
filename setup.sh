@@ -26,8 +26,7 @@ cat /dev/zero | ssh-keygen -q -N ""
 [ ! -f ${HOME}/.nvimrc ] && ln -s ${NVIM_DIR}/init.vim ${HOME}/.nvimrc
 
 # Copying my I3 configuration
-[ ! -d ${CONFIG_DIR}/i3 ] && mkdir -p ${CONFIG_DIR}/i3
-[ ! -f ${CONFIG_DIR}/i3/config ] && ln -s ${DOTFILES_DIR}/i3/config ${I3_CONFIG}/config
+[ ! -d ${CONFIG_DIR}/i3 ] && ln -s ${DOTFILES_DIR}/i3 ${CONFIG_DIR}/i3
 
 # Git Config Stuff
 [ ! -f ${HOME}/.gitconfig ] && ln -s ${DOTFILES_DIR}/gitconfig ${HOME}/.gitconfig
