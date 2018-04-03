@@ -44,7 +44,7 @@ bindsym $altkey+d exec dmenu_run
 # There also is the (new) i3-dmenu-desktop which only displays applications
 # shipping a .desktop file. It is a wrapper around dmenu, so you need that
 # installed.
-# bindsym $altkey+d exec --no-startup-id i3-dmenu-desktop
+# bindsym $altkey+f exec --no-startup-id i3-dmenu-desktop
 
 # change focus
 bindsym $altkey+j focus left
@@ -78,7 +78,7 @@ bindsym $altkey+h split h
 bindsym $altkey+v split v
 
 # enter fullscreen mode for the focused container
-bindsym $altkey+f fullscreen toggle
+# bindsym $altkey+f fullscreen toggle
 
 # change container layout (stacked, tabbed, toggle split)
 bindsym $altkey+s layout stacking

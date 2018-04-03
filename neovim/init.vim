@@ -250,10 +250,10 @@ function! MarkdownStuff()
     set wrap
 endfunction
 
-augroup filetype_sh
+augroup filetype_bash
     au!
     let b:comment_leader = "# "
-    au FileType sh nnoremap <leader>x :call RunCommand('sh')<CR>
+    au FileType sh nnoremap <leader>x :call RunCommand('bash')<CR>
     set nocindent
     syntax on
 augroup END
