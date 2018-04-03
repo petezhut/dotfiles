@@ -35,6 +35,7 @@ scriptencoding=utf8                    " Set script encoding to utf-8
 set termencoding=utf8                  " Set terminal encoding to utf-8
 set wildignore=*.o,*.pyc,*.pyo,*~      " Don't just ignore them, WILDLY ignore them!  It's super effective!
 set clipboard+=unnamed
+set guicursor=
 
 " My Variables...
 let g:Author = "Jason L McFarland"
@@ -125,6 +126,9 @@ call plug#begin('/home/jmcfarland/.config/nvim/plugged')
     Plug 'vim-airline/vim-airline'              " Cool ass statusline
     Plug 'vim-airline/vim-airline-themes'       " Airline themes
     Plug 'fenetikm/falcon'
+    Plug 'challenger-deep-theme/vim'
+    Plug 'ryanoasis/vim-devicons'
+    Plug 'fatih/vim-go'
     Plug 'junegunn/fzf', { 'dir': '/home/jmcfarland/.fzf', 'do': './install --all' }  "Fuzzy Command Line Globbing!
     " Setting vim specific autocomplete
     if has('nvim')
@@ -150,6 +154,7 @@ let NERDTreeQuitOnOpen=0
 let NERDTreeMouseMode=2
 let NERDTreeShowHidden=1
 let NERDTreeKeepTreeInNewTab=1
+let g:NERDTreeWinSize = 60 
 let g:undotree_SetFocusWhenToggle=1
 let g:nerdtree_tabs_open_on_gui_startup=0
 let g:NERDTreeIndicatorMapCustom = {
@@ -204,11 +209,18 @@ let g:tagbar_autofocus = 1
 let g:tagbar_autoclose = 0
 let g:tagbar_show_linenumbers = 1
 let g:tagbar_left = 1
-let g:tagbar_width = 80
+let g:tagbar_width = 60
 
+function! AutoOpenTagBar()
+    :call tagbar#autoopen(0)
+endfunction
 
-function! PythonStuff()
-" python-mode {
+function RunCommand(lang)
+    exec 'vsplit | terminal '.a:lang expand('%')
+endfunction
+
+augroup filetype_python
+    au!
     let g:pymode_rope_completion=0
     let g:pymode_rope_completion_bind = ''
     let g:pymode_rope_complete_on_dot = 0
@@ -218,6 +230,7 @@ function! PythonStuff()
     let g:pymode_folding=0
     let g:pymode_virtualenv=0
     let g:pymode_rope=0
+    let prefix = ''
 " Jedi-Vim {
 "    autocmd FileType python setlocal completeopt-=preview
 
@@ -226,7 +239,11 @@ function! PythonStuff()
     au BufWritePre *.py normal m`:%s/\s\+$//e ``
     au BufWritePre *.py normal m`:%s/\t/\ \ /e ``
     " autocmd! BufWritePost <ESC>:call Flake8()<CR>
-    map <silent> <leader>x <ESC>:w\|!$(which python) %<CR>
+    if isdirectory("env")
+        let prefix = "env/bin/"
+    endif
+    au FileType python nnoremap <leader>x :call RunCommand(prefix.'python')<CR>
+augroup END
     map <silent> <leader>f <ESC>:w\|:call Flake8()<CR>
     set nocindent
     " let python_highlight_all=1
@@ -234,32 +251,33 @@ function! PythonStuff()
     set shiftwidth=2             " I've been burned by softtabstop and tabstop before      
     set softtabstop=2            " Set the softtabstop
     set tabstop=2                " Set the tabstop
-endfunction
+augroup END
 
 function! MarkdownStuff()
     set wrap
 endfunction
 
-function! ShellStuff()
+augroup filetype_bash
+    au!
     let b:comment_leader = "# "
-    map <silent> <leader>x <ESC>:w\|!$(which bash) %<CR>
+    au FileType sh nnoremap <leader>x :call RunCommand('bash')<CR>
     set nocindent
     syntax on
-endfunction
+augroup END
 
-function! GoStuff()
+augroup filetype_go
+    au!
     let b:comment_leader = "// "
-    map <silent> <leader>x <ESC>:w\|!go run %<CR>
+    au FileType go nnoremap <leader>x :call RunCommand('go run')<CR>
     set nocindent
-endfunction
+augroup END
 
-function! RustStuff()
-    let ft=rust
+augroup filetype_rust
     let g:rust_fmt_autosave = 1
     let b:comment_leader = "// "
-    map <silent> <leader>x <ESC>:w\|:RustRun<CR>
+    au FileType rust nnoremap <leader>x :call RunCommand('/home/jmcfarland/.cargo/bin/cargo run')<CR>
     set nocindent
-endfunction
+augroup END
 
 
 highlight TooLong ctermbg=yellow guibg=yellow
@@ -281,14 +299,9 @@ nnoremap <leader>1 :call ToggleLongLines()<CR>
 
 autocmd! BufWritePost * Neomake
 autocmd FileType markdown call MarkdownStuff()
-autocmd FileType python call PythonStuff()
-autocmd BufRead,BufNewFile *.py call PythonStuff()
 autocmd BufRead .nvimrc let b:comment_leader = "\" "
 autocmd FileType cfg let b:comment_leader = "; "
 autocmd BufRead Dockerfile let b:comment_leader = "# "
-autocmd BufRead *.sh call ShellStuff()
-autocmd BufRead *.rs call RustStuff()
-autocmd FileType go call GoStuff()
 
 
 " Workspace Setup
