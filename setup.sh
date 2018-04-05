@@ -4,6 +4,7 @@ DOTFILES_DIR=${HOME}/dotfiles
 CONFIG_DIR=${HOME}/.config
 I3_CONFIG=${CONFIG_DIR}/i3
 NVIM_DIR=${CONFIG_DIR}/nvim
+LILYTERM_DIR=${CONFIG_DIR}/lilyterm
 BIN_DIR=${HOME}/bin
 FZF_DIR=${HOME}/.fzf
 VCPROMPT_URL="https://github.com/djl/vcprompt/raw/master/bin/vcprompt"
@@ -18,15 +19,17 @@ cat /dev/zero | ssh-keygen -q -N ""
 [ ! -d ${BIN_DIR} ] && mkdir -p ${BIN_DIR}
 
 # NeoVim Setup
-[ ! -d ${NVIM_DIR} ] && mkdir -p ${NVIM_DIR}
-[ ! -f ${NVIM_DIR}/init.vim ] && ln -s ${DOTFILES_DIR}/neovim/init.vim ${NVIM_DIR}/init.vim
+[ ! -d ${NVIM_DIR} ] && ln -s ${DOTFILES_DIR}/neovim ${NVIM_DIR}
 
 # Vimrc/NVimrc connection
 [ ! -f ${HOME}/.vimrc ] && ln -s ${NVIM_DIR}/init.vim ${HOME}/.vimrc
 [ ! -f ${HOME}/.nvimrc ] && ln -s ${NVIM_DIR}/init.vim ${HOME}/.nvimrc
 
 # Copying my I3 configuration
-[ ! -d ${CONFIG_DIR}/i3 ] && ln -s ${DOTFILES_DIR}/i3 ${CONFIG_DIR}/i3
+[ ! -d ${I3_CONFIG} ] && ln -s ${DOTFILES_DIR}/i3 ${I3_CONFIG}
+
+# Copying my lilyterm configuration
+[ ! -d ${LILYTERM_DIR} ] && ln -s ${DOTFILES_DIR}/lilyterm ${LILYTERM_DIR}
 
 # Git Config Stuff
 [ ! -f ${HOME}/.gitconfig ] && ln -s ${DOTFILES_DIR}/gitconfig ${HOME}/.gitconfig
