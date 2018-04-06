@@ -237,9 +237,9 @@ augroup filetype_python
     map <silent> <leader>f <ESC>:w\|:call Flake8()<CR>
     set nocindent
     syntax on
-    set shiftwidth=2             " I've been burned by softtabstop and tabstop before      
-    set softtabstop=2            " Set the softtabstop
     set tabstop=2                " Set the tabstop
+    set softtabstop=2            " Set the softtabstop
+    set shiftwidth=2             " I've been burned by softtabstop and tabstop before      
     if isdirectory("env")
         let prefix = "env/bin/"
     endif
