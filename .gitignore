@@ -2,4 +2,5 @@
 neovim/autoload
 neovim/plugged
 neovim/sessions
+ptpython/history
 
