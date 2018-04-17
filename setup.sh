@@ -7,6 +7,7 @@ NVIM_DIR=${CONFIG_DIR}/nvim
 LILYTERM_DIR=${CONFIG_DIR}/lilyterm
 BIN_DIR=${HOME}/bin
 FZF_DIR=${HOME}/.fzf
+PTPYTHON_DIR=${HOME}/.ptpython
 VCPROMPT_URL="https://github.com/djl/vcprompt/raw/master/bin/vcprompt"
 FZF_URL="https://github.com/junegunn/fzf.git"
 VIM_PLUG_URL="https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
@@ -33,6 +34,13 @@ cat /dev/zero | ssh-keygen -q -N ""
 
 # Git Config Stuff
 [ ! -f ${HOME}/.gitconfig ] && ln -s ${DOTFILES_DIR}/gitconfig ${HOME}/.gitconfig
+
+# Tmux Config Stuff
+[ ! -f ${HOME}/.tmux.conf ] && ln -s ${DOTFILES_DIR}/tmux.conf ${HOME}/.tmux.conf
+
+# PtPython Config Stuff
+[ ! -d ${PTPYTHON_DIR} ] && ln -s ${DOTFILES_DIR}/ptpython ${PTPYTHON_DIR}
+
 
 # FZF Stuff
 if [ ! -d  ${FZF_DIR} ]; then
