@@ -1,0 +1,6 @@
+[user]
+	name = Jason L McFarland
+	email = me@place
+[alias]
+	st = status
+	hist = log --graph --pretty=format:'%Cred%h%Creset %an: %s - %Creset %C(yellow)%d%Creset %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
