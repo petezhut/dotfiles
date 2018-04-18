@@ -5,6 +5,7 @@ set termguicolors
 " Turning on certain settings:
 set autoindent                         " Be a nice editor and indent that for me
 set cindent                            " Sometimes you just want to make sure indentation is on
+set smartindent                        " My indentations just got their G.E.D.!
 set expandtab                          " Expand tabs to spaces (Python for the win!)
 set lazyredraw                         " More page redraw speed up!
 set linebreak                          " Turn on linebreaking
@@ -12,7 +13,6 @@ set nowrap                             " Don't wrap long lines by default
 set number                             " Turn on line numbers
 set ruler                              " Turn on the line/column tracker 
 set showmatch                          " Turn on matching open/close bracket/brace/parens
-set smartindent                        " My indentations just got their G.E.D.!
 set smarttab                           " Send indentation to college
 set wildmenu                           " Turn on wildmenu
 set cursorline
@@ -73,6 +73,10 @@ endif
 
 if has('nvim')
     let g:editor_name='nvim'
+  " Neovim Termainal
+  nmap <leader>t :sp term://bash<CR>
+  tnoremap <Esc> <C-\><C-n>
+  tnoremap <leader>l ls -al <cr>
 endif
 
 if (&termencoding ==# 'utf-8' || &encoding ==# 'utf-8')
@@ -125,7 +129,6 @@ call plug#begin('/home/jmcfarland/.config/nvim/plugged')
     Plug 'tpope/vim-unimpaired'                 " Moving around easier
     Plug 'vim-airline/vim-airline'              " Cool ass statusline
     Plug 'vim-airline/vim-airline-themes'       " Airline themes
-    Plug 'fenetikm/falcon'
     Plug 'challenger-deep-theme/vim'
     Plug 'ryanoasis/vim-devicons'
     Plug 'fatih/vim-go'
@@ -189,13 +192,6 @@ colorscheme vividchalk
 
 nmap <leader>v :e /home/jmcfarland/.nvimrc<CR>
 
-if has('nvim')
-  " Neovim Termainal
-  nmap <leader>t :sp term://bash<CR>
-  tnoremap <Esc> <C-\><C-n>
-  tnoremap <leader>l ls -al <cr>
-endif
-
 inoremap <silent> <leader>c gc
 
 let g:pymode_options_max_line_length = 120
@@ -231,26 +227,20 @@ augroup filetype_python
     let g:pymode_virtualenv=0
     let g:pymode_rope=0
     let prefix = ''
-" Jedi-Vim {
-"    autocmd FileType python setlocal completeopt-=preview
-
     let b:comment_leader = "# "
     let g:is_virtual_env = $VIRTUAL_ENV
     au BufWritePre *.py normal m`:%s/\s\+$//e ``
     au BufWritePre *.py normal m`:%s/\t/\ \ /e ``
-    " autocmd! BufWritePost <ESC>:call Flake8()<CR>
+    map <silent> <leader>f <ESC>:w\|:call Flake8()<CR>
+    set nocindent
+    syntax on
+    set ts=2                " Set the tabstop
+    set sts=2            " Set the softtabstop
+    set sw=2             " I've been burned by softtabstop and tabstop before      
     if isdirectory("env")
         let prefix = "env/bin/"
     endif
     au FileType python nnoremap <leader>x :call RunCommand(prefix.'python')<CR>
-augroup END
-    map <silent> <leader>f <ESC>:w\|:call Flake8()<CR>
-    set nocindent
-    " let python_highlight_all=1
-    syntax on
-    set shiftwidth=2             " I've been burned by softtabstop and tabstop before      
-    set softtabstop=2            " Set the softtabstop
-    set tabstop=2                " Set the tabstop
 augroup END
 
 function! MarkdownStuff()
@@ -281,7 +271,6 @@ augroup END
 
 
 highlight TooLong ctermbg=yellow guibg=yellow
-" highlight TooLong ctermbg=234 guibg=#2c2d27
 let s:activatedh = 0 
 function! ToggleLongLines()
     if s:activatedh == 0
@@ -302,54 +291,3 @@ autocmd FileType markdown call MarkdownStuff()
 autocmd BufRead .nvimrc let b:comment_leader = "\" "
 autocmd FileType cfg let b:comment_leader = "; "
 autocmd BufRead Dockerfile let b:comment_leader = "# "
-
-
-" Workspace Setup
-" ----------------
-function! Systest()
-    " Rough num columns to decide between laptop and big monitor screens
-    let numcol = 2
-
-    sp
-    wincmd k
-    term://bash "cd ~/Code/cmf/systest/"
-    file Systest
-    resize 10
-endfunction
-command! -register Systest call Systest()
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"" Session
-nnoremap <leader>ss :call MakeSession()<cr>
-nnoremap <leader>sl :call LoadSession()<cr>
-let g:base_session_dir = $HOME . "/.nvim/sessions"
-set ssop-=options       " do not store options (vimrc) in a session
-"" Make and load method to save session per dir
-function! MakeSession()
-    let b:sessiondir = g:base_session_dir . getcwd()
-    " let b:sessiondir = $HOME . "/.nvim/sessions" . getcwd()
-    if (filewritable(b:sessiondir) != 2)
-        exe 'silent !mkdir -p ' b:sessiondir
-        redraw!
-    endif
-    let b:filename = b:sessiondir . '/session.vim'
-    exe "mksession! " . b:filename
-endfunction
-function! LoadSession()
-    let b:sessiondir = g:base_session_dir . getcwd()
-    let b:sessionfile = b:sessiondir . "/session.vim"
-    if (filereadable(b:sessionfile))
-        exe 'source ' b:sessionfile
-    else
-        echo "No session loaded."
-    endif
-
-endfunction
-
-" Auto-commands 
-augroup autosourcing
-    if(argc() == 0)
-        "au VimEnter * nested :call LoadSession() " Uncomment to automatically load session
-        au VimLeave * :call MakeSession()
-    endif
-augroup END
