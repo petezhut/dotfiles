@@ -135,7 +135,7 @@ call plug#begin('/home/jmcfarland/.config/nvim/plugged')
     Plug 'junegunn/fzf', { 'dir': '/home/jmcfarland/.fzf', 'do': './install --all' }  "Fuzzy Command Line Globbing!
     " Setting vim specific autocomplete
     if has('nvim')
-        Plug 'Shougo/deoplete.nvim'             " Autocomplete for neovim
+        Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }             " Autocomplete for neovim
     else
         Plug 'Shougo/neocomplete.vim'           " Autocomplete for vim
     endif
