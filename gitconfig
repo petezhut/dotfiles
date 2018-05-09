@@ -1,6 +1,10 @@
 [user]
 	name = Jason L McFarland
 	email = me@place
+[color]
+  ui = true
+[core]
+  editor = nvim
 [alias]
 	st = status
 	hist = log -n 1000 --graph --pretty=format:'%Cred%h%Creset %an: %s - %Creset %C(yellow)%d%Creset %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
