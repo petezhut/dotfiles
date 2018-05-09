@@ -35,6 +35,7 @@ floating_modifier $altkey
 # start a terminal
 # bindsym $altkey+Return exec i3-sensible-terminal
 bindsym $altkey+Return exec lilyterm
+exec --no-startup-id nm-applet
 
 # kill focused window
 bindsym $altkey+Shift+q kill
