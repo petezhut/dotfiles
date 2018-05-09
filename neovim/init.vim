@@ -93,8 +93,8 @@ endif
 " My global command shortcuts
 nmap <leader>w :w!<CR>       " When I press ",w", write the file
 nmap <leader>q :q!<CR>       " When I press ",q", exit the file, and do it now!
-nmap <silent> <C-H> :bp<CR>  " This is to map  Ctrl+H to select the next buffer
-nmap <silent> <C-L> :bn<CR>  " This is to map  Ctrl+L to select the previous buffer
+nmap <silent> <C-h> <ESC>:bp<CR>  " This is to map  Ctrl+H to select the next buffer
+nmap <silent> <C-l> <ESC>:bn<CR>  " This is to map  Ctrl+L to select the previous buffer
 
 " Plugins {
 call plug#begin('/home/jmcfarland/.config/nvim/plugged')
@@ -129,6 +129,7 @@ call plug#begin('/home/jmcfarland/.config/nvim/plugged')
     Plug 'tpope/vim-unimpaired'                 " Moving around easier
     Plug 'vim-airline/vim-airline'              " Cool ass statusline
     Plug 'vim-airline/vim-airline-themes'       " Airline themes
+    Plug 'vimoutliner/vimoutliner'              " VimOutliner
     Plug 'challenger-deep-theme/vim'
     Plug 'ryanoasis/vim-devicons'
     Plug 'fatih/vim-go'
@@ -140,6 +141,7 @@ call plug#begin('/home/jmcfarland/.config/nvim/plugged')
         Plug 'Shougo/neocomplete.vim'           " Autocomplete for vim
     endif
     Plug 'nvie/vim-flake8'                      " Flake8 !
+    Plug 'vietjtnguyen/toy-blocks'
     " This has to be loaded after everything else
 call plug#end()
 " }
@@ -188,8 +190,8 @@ autocmd FileType nerdtree setlocal nolist
 " rainbow {
     let g:rainbow_active = 1
 " }
-colorscheme vividchalk
-
+" colorscheme vividchalk
+colorscheme toy-blocks
 nmap <leader>v :e /home/jmcfarland/.nvimrc<CR>
 
 inoremap <silent> <leader>c gc
