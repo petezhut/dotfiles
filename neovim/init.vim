@@ -5,6 +5,7 @@ set termguicolors
 " Turning on certain settings:
 set autoindent                         " Be a nice editor and indent that for me
 set cindent                            " Sometimes you just want to make sure indentation is on
+set ignorecase
 set smartindent                        " My indentations just got their G.E.D.!
 set expandtab                          " Expand tabs to spaces (Python for the win!)
 set lazyredraw                         " More page redraw speed up!
@@ -42,14 +43,20 @@ let g:Author = "Jason L McFarland"
 let g:Nickname = 'the_qe_viking'
 let g:Email = 'someone@somewhere.com'
 
+" auto reload vimrc/nvimrc/init.vim when editing it
+autocmd! bufwritepost .vimrc source $HOME/.vimrc
+autocmd! bufwritepost .nvimrc source $HOME/.nvimrc
+autocmd! bufwritepost init.vim source $HOME/.config/nvim/init.vim
+
+
 " Since we can't all be the captain, some of us shall be crew
 let mapleader = ","                    
 let g:mapleader = ","
 let g:editor_name='vim'
 let g:mapleader = ','
 let g:max_cols = 35
-let g:neovim2_venv=expand('/home/jmcfarland/virtual_envs/neovim2/bin/python')
-let g:neovim3_venv=expand('/home/jmcfarland/virtual_envs/neovim3/bin/python')
+let g:neovim2_venv=$WORKON_HOME."/neovim2/bin/python"
+let g:neovim3_venv=$WORKON_HOME."/neovim3/bin/python"
 
 if !empty(glob(g:neovim2_venv))
     let g:python_host_prog=g:neovim2_venv
@@ -175,7 +182,7 @@ let g:NERDTreeIndicatorMapCustom = {
 autocmd FileType nerdtree setlocal nolist
 
 " vim-airline {
-    let g:airline_theme='gruvbox'
+    let g:airline_theme='deus'
     let g:airline_powerline_fonts = 1
     let g:airline#extensions#tabline#enabled = 1
     let g:airline_left_sep='›' " Slightly fancier than '>'
@@ -191,7 +198,7 @@ autocmd FileType nerdtree setlocal nolist
     let g:rainbow_active = 1
 " }
 " colorscheme vividchalk
-colorscheme toy-blocks
+colorscheme Spink
 nmap <leader>v :e /home/jmcfarland/.nvimrc<CR>
 
 inoremap <silent> <leader>c gc
@@ -236,6 +243,8 @@ augroup filetype_python
     map <silent> <leader>f <ESC>:w\|:call Flake8()<CR>
     set nocindent
     syntax on
+    set expandtab
+    set copyindent
     set ts=2                " Set the tabstop
     set sts=2            " Set the softtabstop
     set sw=2             " I've been burned by softtabstop and tabstop before      
