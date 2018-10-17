@@ -11,18 +11,23 @@ if (empty($TMUX))
   endif
 endif
 
+function! RunInTerminal()
+  echo g:lang
+    exec 'split | terminal '.g:lang expand('%')
+endfunction
+
 
 " Turning on certain settings:
 set autoindent                         " Be a nice editor and indent that for me
 set cindent                            " Sometimes you just want to make sure indentation is on
 set ignorecase
 set smartindent                        " My indentations just got their G.E.D.!
-set expandtab                          " Expand tabs to spaces (Python for the win!)
+set expandtab                          " Expand tabs to spaces(Python for the win!)
 set lazyredraw                         " More page redraw speed up!
 set linebreak                          " Turn on linebreaking
 set nowrap                             " Don't wrap long lines by default
 set number                             " Turn on line numbers
-set ruler                              " Turn on the line/column tracker 
+set ruler                              " Turn on the line/column tracker
 set showmatch                          " Turn on matching open/close bracket/brace/parens
 set smarttab                           " Send indentation to college
 set wildmenu                           " Turn on wildmenu
@@ -30,6 +35,7 @@ set cursorline
 set autoread
 set autowrite
 set smartcase                          " This makes the usually case-insensitve searches case-sensitive when a capital is used!
+set directory=$HOME/.vim/swapfiles//   " Store Swapfiles centrally
 
 " Setting other settings to specific values
 set background=dark                    " All supervillians have a dark past
@@ -38,15 +44,16 @@ set cmdheight=2                        " Lets give the command bar enough room t
 set laststatus=2                       " Make the status bar puuuuurty
 set scrolloff=5                        " Let's save some love for the cursor when scrolling vertically
 set sidescrolloff=5                    " Let's save some love for the cursor when scrolling horizontally
-set shiftwidth=2                       " I've been burned by softtabstop and tabstop before      
+set shiftwidth=2                       " I've been burned by softtabstop and tabstop before
 set softtabstop=2                      " Set the softtabstop
 set nofoldenable
 set tabstop=2                          " Set the tabstop
 scriptencoding=utf8                    " Set script encoding to utf-8
 set termencoding=utf8                  " Set terminal encoding to utf-8
-set wildignore=*.o,*.pyc,*.pyo,*~      " Don't just ignore them, WILDLY ignore them!  It's super effective!
+set wildignore=*.o,*~,*.pyc,*.py0
 set clipboard+=unnamed
-set guicursor=
+set guicursor=n-v-c:block-Cursor/lCursor-blinkon0,i-ci:ver25-Cursor/lCursor,r-cr:hor20-Cursor/lCursor
+
 
 " My Variables...
 let g:Author = "Jason L McFarland"
@@ -57,23 +64,25 @@ let g:Email = 'someone@somewhere.com'
 autocmd! bufwritepost .vimrc source $HOME/.vimrc
 autocmd! bufwritepost .nvimrc source $HOME/.nvimrc
 autocmd! bufwritepost init.vim source $HOME/.config/nvim/init.vim
+autocmd InsertEnter * highlight CursorLine guibg=#000050 guifg=fg
+autocmd InsertLeave * highlight CursorLine guibg=#004000 guifg=fg
 
 
 " Since we can't all be the captain, some of us shall be crew
-let mapleader = ","                    
+let mapleader = ","
 let g:mapleader = ","
-let g:editor_name='vim'
+let g:editor_name = 'vim'
 let g:mapleader = ','
 let g:max_cols = 35
-let g:neovim2_venv=$WORKON_HOME."/neovim2/bin/python"
-let g:neovim3_venv=$WORKON_HOME."/neovim3/bin/python"
+let g:neovim2_venv =$WORKON_HOME."/neovim2/bin/python"
+let g:neovim3_venv =$WORKON_HOME."/neovim3/bin/python"
 
 if !empty(glob(g:neovim2_venv))
-    let g:python_host_prog=g:neovim2_venv
+    let g:python_host_prog = g:neovim2_venv
 endif
 
 if !empty(glob(g:neovim3_venv))
-    let g:python3_host_prog=g:neovim3_venv
+    let g:python3_host_prog = g:neovim3_venv
 endif
 
 if empty(glob('/home/jmcfarland/.vim/autoload/plug.vim'))
@@ -82,14 +91,18 @@ if empty(glob('/home/jmcfarland/.vim/autoload/plug.vim'))
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
-if empty(expand('/home/jmcfarland/.config/nvim/autoload/plug.vim'))
-  silent !curl -fLo /home/jmcfarland/.config/nvim/autoload/plug.vim --create-dirs
-    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+" if empty(glob($HOME."/.vim/autoload/plug.vim"))
+"   silent !curl - fLo $HOME."/.vim/autoload/plug.vim" --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+"   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+" endif
+
+if empty(glob($HOME."/.config/nvim/autoload/plug.vim"))
+  silent !curl - fLo $HOME."/.config/nvim/autoload/plug.vim" --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
 if has('nvim')
-    let g:editor_name='nvim'
+    let g:editor_name = 'nvim'
   " Neovim Termainal
   nmap <leader>t :sp term://bash<CR>
   tnoremap <Esc> <C-\><C-n>
@@ -102,19 +115,26 @@ if (&termencoding ==# 'utf-8' || &encoding ==# 'utf-8')
 else
 	set listchars=tab:>\ ,trail:-,extends:>,precedes:<
 endif
-    
+
 if exists('&inccommand')
   set inccommand=split " Turn on live preview substitute
 endif
 
 " My global command shortcuts
-nmap <leader>w :w!<CR>       " When I press ",w", write the file
-nmap <leader>q :q!<CR>       " When I press ",q", exit the file, and do it now!
-nmap <silent> <C-h> <ESC>:bp<CR>  " This is to map  Ctrl+H to select the next buffer
-nmap <silent> <C-l> <ESC>:bn<CR>  " This is to map  Ctrl+L to select the previous buffer
+nmap <leader>w :w!<CR>                          " When I press ",w", write the file
+nmap <leader>q :q!<CR>                          " When I press ",q", exit the file, and do it now!
+nmap <silent> <C-h> <ESC>:bprevious<CR>         " This is to map  Ctrl+H to select the next buffer
+nmap <silent> <C-l> <ESC>:bnext<CR>             " This is to map  Ctrl+L to select the previous buffer
+nnoremap <leader>x :call RunInTerminal()<CR>    " Execute the current file in a buffer
+nmap <leader>v :e $HOME/.nvimrc<CR>
+inoremap <silent> <leader>c gc
 
 " Plugins {
-call plug#begin('/home/jmcfarland/.config/nvim/plugged')
+call plug#begin($HOME."/.config/nvim/plugged")  "
+    Plug 'airblade/vim-gitgutter'               " Show git changes
+    Plug 'altercation/vim-colors-solarized'     " Solarized stuff
+    "Plug 'challenger-deep-theme/vim'
+    Plug 'ctrlpvim/ctrlp.vim'                   " Fuzzy file finder
     Plug 'Chiel92/vim-autoformat'               " Autoformatting of code
     Plug 'Xuyuanp/nerdtree-git-plugin'          " Git plugin for nerdtree
     Plug 'airblade/vim-gitgutter'               " Show git changes
@@ -122,10 +142,12 @@ call plug#begin('/home/jmcfarland/.config/nvim/plugged')
     Plug 'neomake/neomake'                      " Syntax checking
     Plug 'ctrlpvim/ctrlp.vim'                   " Fuzzy file finder
     Plug 'easymotion/vim-easymotion'            " Move more freely
+    Plug 'fatih/vim-go'
     Plug 'flazz/vim-colorschemes'               " Color schemes for days
     Plug 'haya14busa/incsearch.vim'             " Better searching
     Plug 'jiangmiao/auto-pairs'                 " Auto pair parens and brackets
     Plug 'jszakmeister/vim-togglecursor'        " Toggle cursor in insert mode
+    Plug 'junegunn/fzf', { 'dir':'/home/jmcfarland/.fzf', 'do':'./install --all' }  "Fuzzy Command Line Globbing!
     Plug 'klen/python-mode'                     " Python specific features
     Plug 'rust-lang/rust.vim'                   " Rust all the things!
     Plug 'luochen1990/rainbow'                  " Rainbow parenthesis
@@ -134,8 +156,10 @@ call plug#begin('/home/jmcfarland/.config/nvim/plugged')
     Plug 'sjl/badwolf'                          " Really nice colorscheme
     Plug 'morhetz/gruvbox'                      " Really nice colorscheme
     Plug 'nathanaelkane/vim-indent-guides'      " Indent Guides
+    Plug 'nvie/vim-flake8'                      " Flake8 !
     Plug 'powerline/fonts'                      " Powerline fonts for airline
     Plug 'rking/ag.vim'                         " Silver searcher searching
+    Plug 'ryanoasis/vim-devicons'
     Plug 'schickling/vim-bufonly'               " Close all buffers except one
     Plug 'scrooloose/nerdtree'                  " File tree viewer
     Plug 'spf13/vim-colors'                     " Some colors
@@ -147,10 +171,9 @@ call plug#begin('/home/jmcfarland/.config/nvim/plugged')
     Plug 'vim-airline/vim-airline'              " Cool ass statusline
     Plug 'vim-airline/vim-airline-themes'       " Airline themes
     Plug 'vimoutliner/vimoutliner'              " VimOutliner
-    Plug 'challenger-deep-theme/vim'
-    Plug 'ryanoasis/vim-devicons'
-    Plug 'fatih/vim-go'
-    Plug 'junegunn/fzf', { 'dir': '/home/jmcfarland/.fzf', 'do': './install --all' }  "Fuzzy Command Line Globbing!
+    Plug 'w0rp/ale'
+    Plug 'vimwiki/vimwiki'
+    " This has to be loaded after everything else
     " Setting vim specific autocomplete
     if has('nvim')
         Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }             " Autocomplete for neovim
@@ -196,6 +219,7 @@ let g:NERDTreeIndicatorMapCustom = {
 autocmd FileType nerdtree setlocal nolist
 
 " vim-airline {
+    "let g:airline_theme='tendedeusr'
     let g:airline_theme='deus'
     let g:airline_powerline_fonts = 1
     let g:airline#extensions#tabline#enabled = 1
@@ -212,22 +236,20 @@ autocmd FileType nerdtree setlocal nolist
     let g:rainbow_active = 1
 " }
 " colorscheme vividchalk
-" colorscheme Spink
-colorscheme wtf 
+colorscheme Spink
 nmap <leader>v :e /home/jmcfarland/.nvimrc<CR>
 
 inoremap <silent> <leader>c gc
 
 let g:pymode_options_max_line_length = 120
 let g:pymode_options_colorcolumn = 1
-
-let g:neomake_python_enabled_markers = ['flake8']
+" let g:neomake_python_enabled_markers = ['flake8']
 
 " TagBar
 nmap <F8> :TagbarToggle<CR>
 let g:tagbar_autofocus = 1
 let g:tagbar_autoclose = 0
-let g:tagbar_show_linenumbers = 1
+let g:tagbar_show_linenumbers = -1
 let g:tagbar_left = 1
 let g:tagbar_width = 60
 
@@ -235,21 +257,22 @@ function! AutoOpenTagBar()
     :call tagbar#autoopen(0)
 endfunction
 
-function RunCommand(lang)
-    exec 'vsplit | terminal '.a:lang expand('%')
-endfunction
+" ALE Linting
+
+
 
 augroup filetype_python
     au!
-    let g:pymode_rope_completion=0
+    let g:pymode_rope_completion = 0
     let g:pymode_rope_completion_bind = ''
     let g:pymode_rope_complete_on_dot = 0
-    let g:pymode_indent=0
-    let g:pymode_lint=0
-    let g:pymode_lint_checker = "pyflakes,pep8"
-    let g:pymode_folding=0
-    let g:pymode_virtualenv=0
+    let g:pymode_indent = 1
+    let g:pymode_lint = 0
+    let g:pymode_virtualenv=1
     let g:pymode_rope=0
+    "let b:ale_fix_on_save = 1
+    let b:ale_linters = ['flake8', 'pylint']
+    "let b:ale_fixers = ['autopep8', 'yapf']
     let prefix = ''
     let b:comment_leader = "# "
     let g:is_virtual_env = $VIRTUAL_ENV
@@ -260,23 +283,28 @@ augroup filetype_python
     syntax on
     set expandtab
     set copyindent
-    set ts=2                " Set the tabstop
+    set ts=2             " Set the tabstop
     set sts=2            " Set the softtabstop
-    set sw=2             " I've been burned by softtabstop and tabstop before      
+    set sw=2             " I've been burned by softtabstop and tabstop before
+    let g:nord_italic_comments = 1
+
+    let g:lang = "python"
     if isdirectory("env")
-        let prefix = "env/bin/"
+        " let prefix = "env/bin/"
+        let g:lang = "env/bin/python"
     endif
     au FileType python nnoremap <leader>x :call RunCommand(prefix.'python')<CR>
 augroup END
 
 function! MarkdownStuff()
     set wrap
+    colorscheme candyman
 endfunction
 
 augroup filetype_bash
     au!
     let b:comment_leader = "# "
-    au FileType sh nnoremap <leader>x :call RunCommand('bash')<CR>
+    let g:lang = "bash"
     set nocindent
     syntax on
 augroup END
@@ -284,36 +312,54 @@ augroup END
 augroup filetype_go
     au!
     let b:comment_leader = "// "
-    au FileType go nnoremap <leader>x :call RunCommand('go run')<CR>
+    let g:lang = "go run"
     set nocindent
 augroup END
 
 augroup filetype_rust
     let g:rust_fmt_autosave = 1
     let b:comment_leader = "// "
-    au FileType rust nnoremap <leader>x :call RunCommand('/home/jmcfarland/.cargo/bin/cargo run')<CR>
+    let g:lang = "/home/jmcfarland/.cargo/bin/cargo run"
     set nocindent
 augroup END
 
 
 highlight TooLong ctermbg=yellow guibg=yellow
-let s:activatedh = 0 
+let s:activatedh = 0
 function! ToggleLongLines()
     if s:activatedh == 0
-        let s:activatedh = 1 
+        let s:activatedh = 1
         let g:pymode_options_colorcolumn = 1
         set colorcolumn=+1
     else
-        let s:activatedh = 0 
+        let s:activatedh = 0
         let g:pymode_options_colorcolumn = 0
         set colorcolumn=
     endif
 endfunction
 
 nnoremap <leader>1 :call ToggleLongLines()<CR>
+colorscheme peaksea
+
+function! StripTrailingWhitespace()
+	let l:_s=@/
+	let l:l = line('.')
+	let l:c = line('.')
+	%s/\s\+$//e
+	let @/=l:_s
+	call cursor(l:l, l:c)
+endfunction
+
+nnoremap <Leader>sw :call StripTrailingWhitespace()<CR>
+autocmd BufWritePre * %s/\s\+$//e
+
+"autocmd FileType cgcpp,java,php,javascript,puppet,python,rust,twig,xml,yml,perl,sql,groovy,sh autocmd BufWritePre <buffer> :call StripTrailingWhitespace()
+
 
 autocmd! BufWritePost * Neomake
 autocmd FileType markdown call MarkdownStuff()
 autocmd BufRead .nvimrc let b:comment_leader = "\" "
 autocmd FileType cfg let b:comment_leader = "; "
 autocmd BufRead Dockerfile let b:comment_leader = "# "
+autocmd FileType python let g:lang = "python"
+autocmd FileType go let g:lang = "go run"
