@@ -62,11 +62,11 @@ autocmd InsertLeave * highlight CursorLine guibg=#004000 guifg=fg
 " Since we can't all be the captain, some of us shall be crew
 let mapleader = ","
 let g:mapleader = ","
-let g:editor_name = 'vim'
 let g:mapleader = ','
 let g:max_cols = 35
-let g:neovim2_venv =$WORKON_HOME."/neovim2/bin/python"
-let g:neovim3_venv =$WORKON_HOME."/neovim3/bin/python"
+let g:editor_name = 'vim'
+let g:neovim2_venv = $HOME."/virtual_envs/neovim2/bin/python"
+let g:neovim3_venv = $HOME."/virtual_envs/neovim3/bin/python"
 
 if !empty(glob(g:neovim2_venv))
     let g:python_host_prog = g:neovim2_venv
@@ -119,7 +119,6 @@ inoremap <silent> <leader>c gc
 call plug#begin($HOME."/.config/nvim/plugged")  "
     Plug 'airblade/vim-gitgutter'               " Show git changes
     Plug 'altercation/vim-colors-solarized'     " Solarized stuff
-    "Plug 'challenger-deep-theme/vim'
     Plug 'ctrlpvim/ctrlp.vim'                   " Fuzzy file finder
     Plug 'Chiel92/vim-autoformat'               " Autoformatting of code
     Plug 'Xuyuanp/nerdtree-git-plugin'          " Git plugin for nerdtree
@@ -162,6 +161,7 @@ call plug#begin($HOME."/.config/nvim/plugged")  "
     else
         Plug 'Shougo/neocomplete.vim'           " Autocomplete for vim
     endif
+    Plug 'heavenshell/vim-pydocstring'
 call plug#end()
 " }
 
@@ -319,9 +319,6 @@ endfunction
 
 nnoremap <Leader>sw :call StripTrailingWhitespace()<CR>
 autocmd BufWritePre * %s/\s\+$//e
-
-"autocmd FileType cgcpp,java,php,javascript,puppet,python,rust,twig,xml,yml,perl,sql,groovy,sh autocmd BufWritePre <buffer> :call StripTrailingWhitespace()
-
 
 autocmd! BufWritePost * Neomake
 autocmd FileType markdown call MarkdownStuff()
