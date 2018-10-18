@@ -1,5 +1,14 @@
-if (has("termguicolors"))
-  set termguicolors
+if (empty($TMUX))
+  if (has("nvim"))
+    "For Neovim 0.1.3 and 0.1.4 < https://github.com/neovim/neovim/pull/2198 >
+    let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+  endif
+  "For Neovim > 0.1.5 and Vim > patch 7.4.1799 < https://github.com/vim/vim/commit/61be73bb0f965a895bfb064ea3e55476ac175162 >
+  "Based on Vim patch 7.4.1770 (`guicolors` option) < https://github.com/vim/vim/commit/8a633e3427b47286869aa4b96f2bfc1fe65b25cd >
+  " < https://github.com/neovim/neovim/wiki/Following-HEAD#20160511 >
+  if (has("termguicolors"))
+    set termguicolors
+  endif
 endif
 
 function! RunInTerminal()
@@ -62,6 +71,7 @@ autocmd InsertLeave * highlight CursorLine guibg=#004000 guifg=fg
 " Since we can't all be the captain, some of us shall be crew
 let mapleader = ","
 let g:mapleader = ","
+let g:editor_name = 'vim'
 let g:mapleader = ','
 let g:max_cols = 35
 let g:editor_name = 'vim'
@@ -76,6 +86,11 @@ if !empty(glob(g:neovim3_venv))
     let g:python3_host_prog = g:neovim3_venv
 endif
 
+if empty(glob('/home/jmcfarland/.vim/autoload/plug.vim'))
+  silent !curl -fLo /home/jmcfarland/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
 
 " if empty(glob($HOME."/.vim/autoload/plug.vim"))
 "   silent !curl - fLo $HOME."/.vim/autoload/plug.vim" --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
@@ -119,6 +134,7 @@ inoremap <silent> <leader>c gc
 call plug#begin($HOME."/.config/nvim/plugged")  "
     Plug 'airblade/vim-gitgutter'               " Show git changes
     Plug 'altercation/vim-colors-solarized'     " Solarized stuff
+    "Plug 'challenger-deep-theme/vim'
     Plug 'ctrlpvim/ctrlp.vim'                   " Fuzzy file finder
     Plug 'Chiel92/vim-autoformat'               " Autoformatting of code
     Plug 'Xuyuanp/nerdtree-git-plugin'          " Git plugin for nerdtree
@@ -161,7 +177,13 @@ call plug#begin($HOME."/.config/nvim/plugged")  "
     else
         Plug 'Shougo/neocomplete.vim'           " Autocomplete for vim
     endif
+    Plug 'nvie/vim-flake8'                      " Flake8 !
+    Plug 'vietjtnguyen/toy-blocks'
+    Plug 'nightsense/carbonized'
+    " Plug 'joshdick/onedark'
+    Plug 'sstallion/vim-wtf'
     Plug 'heavenshell/vim-pydocstring'
+    " This has to be loaded after everything else
 call plug#end()
 " }
 
@@ -170,6 +192,7 @@ set signcolumn=yes
 
 " NERDTree {
 map <leader>e :NERDTreeToggle<CR>               " Nerdtree really is great, isn't it?
+
 let NERDTreeShowBookmarks=1
 let NERDTreeIgnore=['\.png$','\.py[cd]$','\~$','\.swo$','\.swp$','^\.git$','^\.hg$','^\.svn$','\.bzr$','^\.ropeproject$']
 let NERDTreeChDirMode=0
@@ -177,19 +200,19 @@ let NERDTreeQuitOnOpen=0
 let NERDTreeMouseMode=2
 let NERDTreeShowHidden=1
 let NERDTreeKeepTreeInNewTab=1
-let g:NERDTreeWinSize = 60
+let g:NERDTreeWinSize = 60 
 let g:undotree_SetFocusWhenToggle=1
 let g:nerdtree_tabs_open_on_gui_startup=0
 let g:NERDTreeIndicatorMapCustom = {
-    \ "Modified"  :"✹",
-    \ "Staged"    :"✚",
-    \ "Untracked" :"✭",
-    \ "Renamed"   :"➜",
-    \ "Unmerged"  :"═",
-    \ "Deleted"   :"✖",
-    \ "Dirty"     :"✗",
-    \ "Clean"     :"✔︎",
-    \ "Unknown"   :"?"}
+    \ "Modified"  : "✹",
+    \ "Staged"    : "✚",
+    \ "Untracked" : "✭",
+    \ "Renamed"   : "➜",
+    \ "Unmerged"  : "═",
+    \ "Deleted"   : "✖",
+    \ "Dirty"     : "✗",
+    \ "Clean"     : "✔︎",
+    \ "Unknown"   : "?"}
 autocmd FileType nerdtree setlocal nolist
 
 " vim-airline {
@@ -209,6 +232,11 @@ autocmd FileType nerdtree setlocal nolist
 " rainbow {
     let g:rainbow_active = 1
 " }
+" colorscheme vividchalk
+colorscheme Spink
+nmap <leader>v :e /home/jmcfarland/.nvimrc<CR>
+
+inoremap <silent> <leader>c gc
 
 let g:pymode_options_max_line_length = 120
 let g:pymode_options_colorcolumn = 1
@@ -245,6 +273,7 @@ augroup filetype_python
     let prefix = ''
     let b:comment_leader = "# "
     let g:is_virtual_env = $VIRTUAL_ENV
+    au BufWritePre *.py normal m`:%s/\s\+$//e ``
     au BufWritePre *.py normal m`:%s/\t/\ \ /e ``
     map <silent> <leader>f <ESC>:w\|:call Flake8()<CR>
     set nocindent
@@ -261,6 +290,7 @@ augroup filetype_python
         " let prefix = "env/bin/"
         let g:lang = "env/bin/python"
     endif
+    au FileType python nnoremap <leader>x :call RunCommand(prefix.'python')<CR>
 augroup END
 
 function! MarkdownStuff()
@@ -319,6 +349,9 @@ endfunction
 
 nnoremap <Leader>sw :call StripTrailingWhitespace()<CR>
 autocmd BufWritePre * %s/\s\+$//e
+
+"autocmd FileType cgcpp,java,php,javascript,puppet,python,rust,twig,xml,yml,perl,sql,groovy,sh autocmd BufWritePre <buffer> :call StripTrailingWhitespace()
+
 
 autocmd! BufWritePost * Neomake
 autocmd FileType markdown call MarkdownStuff()
