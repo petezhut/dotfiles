@@ -37,7 +37,7 @@ floating_modifier $altkey
 # bindsym $altkey+Return exec i3-sensible-terminal
 bindsym $altkey+Return exec lilyterm
 exec --no-startup-id nm-applet
-exec --no-startup-id setxkbmap -option caps:swapescape
+# exec --no-startup-id setxkbmap -option caps:swapescape
 bindsym $winkey+l workspace next
 bindsym $winkey+h workspace prev
 # kill focused window

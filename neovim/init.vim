@@ -203,7 +203,7 @@ let NERDTreeQuitOnOpen=0
 let NERDTreeMouseMode=2
 let NERDTreeShowHidden=1
 let NERDTreeKeepTreeInNewTab=1
-let g:NERDTreeWinSize = 60 
+let g:NERDTreeWinSize = 60
 let g:undotree_SetFocusWhenToggle=1
 let g:nerdtree_tabs_open_on_gui_startup=0
 let g:NERDTreeIndicatorMapCustom = {
@@ -290,10 +290,8 @@ augroup filetype_python
 
     let g:lang = "python"
     if isdirectory("env")
-        " let prefix = "env/bin/"
         let g:lang = "env/bin/python"
     endif
-    au FileType python nnoremap <leader>x :call RunCommand(prefix.'python')<CR>
 augroup END
 
 function! MarkdownStuff()
