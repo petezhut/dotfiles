@@ -17,19 +17,37 @@ alias mount="mount | column -t"
 alias ls="$([ -f /usr/local/bin/exa ] && echo "/usr/local/bin/exa -lh --git --ignore-glob '*.pyc'" ||  echo "/bin/ls")"
 alias python="/usr/local/bin/python3"
 alias py3="/usr/local/bin/python3"
+[ -f ~/.local/bash_aliases ] && source ~/.local/bash_aliases
 
-sys-update () {
+
+rustupdate() {
+  rustup update
+}
+
+goupdate() {
+  pushd .
+  cd ${HOME}/bin/update-golang
+  sudo ./update-golang.sh
+  popd
+}
+
+neovim_python_update() {
+  workon neovim2; pip install --upgrade neovim; deactivate
+  workon neovim3; pip install --upgrade neovim; deactivate
+}
+remove_contaiers() {
+  docker rm $(docker ps -a -q)
+}
+
+remove_images() {
+  docker rmi $(docker images -q)
+}
+
+update() {
   sudo apt update
-  sudo apt -y upgrade
-  sudo apt -y dist-upgrade
-  sudo apt -y autoremove
+  sudo apt -y upgrade; sudo apt -y dist-upgrade; sudo apt -y autoremove
+  rustupdate
+  goupdate
+  neovim_python_update
 }
 
-stringer () {
-   cd ~/Docker/stringer/
-   docker-compose pull
-   docker-compose start
-   cd -
-}
-
-alias update="sys-update; stringer"

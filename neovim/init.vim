@@ -152,7 +152,7 @@ call plug#begin($HOME."/.config/nvim/plugged")  "
     Plug 'majutsushi/tagbar'                    " Browsing tags and stuff
     Plug 'mbbill/undotree'                      " Undo tree
     Plug 'morhetz/gruvbox'                      " Really nice colorscheme
-    Plug 'nathanaelkane/vim-indent-guides'      " Indent Guides
+    " Plug 'nathanaelkane/vim-indent-guides'      " Indent Guides
     Plug 'nvie/vim-flake8'                      " Flake8 !
     Plug 'powerline/fonts'                      " Powerline fonts for airline
     Plug 'rking/ag.vim'                         " Silver searcher searching
@@ -200,7 +200,7 @@ let NERDTreeQuitOnOpen=0
 let NERDTreeMouseMode=2
 let NERDTreeShowHidden=1
 let NERDTreeKeepTreeInNewTab=1
-let g:NERDTreeWinSize = 60 
+let g:NERDTreeWinSize = 60
 let g:undotree_SetFocusWhenToggle=1
 let g:nerdtree_tabs_open_on_gui_startup=0
 let g:NERDTreeIndicatorMapCustom = {
@@ -255,6 +255,7 @@ function! AutoOpenTagBar()
 endfunction
 
 " ALE Linting
+let g:ale_enabled = 0
 
 
 
@@ -263,12 +264,12 @@ augroup filetype_python
     let g:pymode_rope_completion = 0
     let g:pymode_rope_completion_bind = ''
     let g:pymode_rope_complete_on_dot = 0
-    let g:pymode_indent = 1
+    let g:pymode_indent = 0
     let g:pymode_lint = 0
     let g:pymode_virtualenv=1
     let g:pymode_rope=0
     "let b:ale_fix_on_save = 1
-    let b:ale_linters = ['flake8', 'pylint']
+    "let b:ale_linters = ['flake8', 'pylint']
     "let b:ale_fixers = ['autopep8', 'yapf']
     let prefix = ''
     let b:comment_leader = "# "
@@ -290,7 +291,7 @@ augroup filetype_python
         " let prefix = "env/bin/"
         let g:lang = "env/bin/python"
     endif
-    au FileType python nnoremap <leader>x :call RunCommand(prefix.'python')<CR>
+    " au FileType python nnoremap <leader>x :call RunInTerminal(prefix.'python')<CR>
 augroup END
 
 function! MarkdownStuff()

@@ -164,3 +164,7 @@ bar {
         status_command i3status -c $HOME/.config/i3/i3status.conf
         font pango:3270Medium Nerd Font Medium 10
 }
+
+#opacity-rule = [
+#    "0:_NET_WM_STATE@:32a *= '_NET_WM_STATE_HIDDEN'"
+# ];
