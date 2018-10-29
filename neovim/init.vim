@@ -74,9 +74,8 @@ let g:mapleader = ","
 let g:editor_name = 'vim'
 let g:mapleader = ','
 let g:max_cols = 35
-let g:editor_name = 'vim'
-let g:neovim2_venv = $HOME."/virtual_envs/neovim2/bin/python"
-let g:neovim3_venv = $HOME."/virtual_envs/neovim3/bin/python"
+let g:neovim2_venv =$WORKON_HOME."/neovim2/bin/python"
+let g:neovim3_venv =$WORKON_HOME."/neovim3/bin/python"
 
 if !empty(glob(g:neovim2_venv))
     let g:python_host_prog = g:neovim2_venv
@@ -138,7 +137,10 @@ call plug#begin($HOME."/.config/nvim/plugged")  "
     Plug 'ctrlpvim/ctrlp.vim'                   " Fuzzy file finder
     Plug 'Chiel92/vim-autoformat'               " Autoformatting of code
     Plug 'Xuyuanp/nerdtree-git-plugin'          " Git plugin for nerdtree
+    Plug 'airblade/vim-gitgutter'               " Show git changes
+    Plug 'altercation/vim-colors-solarized'     " Solarized stuff
     Plug 'neomake/neomake'                      " Syntax checking
+    Plug 'ctrlpvim/ctrlp.vim'                   " Fuzzy file finder
     Plug 'easymotion/vim-easymotion'            " Move more freely
     Plug 'fatih/vim-go'
     Plug 'flazz/vim-colorschemes'               " Color schemes for days
@@ -151,17 +153,17 @@ call plug#begin($HOME."/.config/nvim/plugged")  "
     Plug 'luochen1990/rainbow'                  " Rainbow parenthesis
     Plug 'majutsushi/tagbar'                    " Browsing tags and stuff
     Plug 'mbbill/undotree'                      " Undo tree
+    Plug 'sjl/badwolf'                          " Really nice colorscheme
     Plug 'morhetz/gruvbox'                      " Really nice colorscheme
-    " Plug 'nathanaelkane/vim-indent-guides'      " Indent Guides
     Plug 'nvie/vim-flake8'                      " Flake8 !
     Plug 'powerline/fonts'                      " Powerline fonts for airline
     Plug 'rking/ag.vim'                         " Silver searcher searching
     Plug 'ryanoasis/vim-devicons'
     Plug 'schickling/vim-bufonly'               " Close all buffers except one
     Plug 'scrooloose/nerdtree'                  " File tree viewer
-    Plug 'sjl/badwolf'                          " Really nice colorscheme
     Plug 'spf13/vim-colors'                     " Some colors
     Plug 'tpope/vim-commentary'                 " Comment all the things
+    Plug 'tpope/vim-vividchalk'                 " Comment all the things
     Plug 'tpope/vim-fugitive'                   " Git stuff
     Plug 'tpope/vim-surround'                   " Surround things with things
     Plug 'tpope/vim-unimpaired'                 " Moving around easier
@@ -173,7 +175,7 @@ call plug#begin($HOME."/.config/nvim/plugged")  "
     " This has to be loaded after everything else
     " Setting vim specific autocomplete
     if has('nvim')
-        Plug 'Shougo/deoplete.nvim', { 'do':':UpdateRemotePlugins' }             " Autocomplete for neovim
+        Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }             " Autocomplete for neovim
     else
         Plug 'Shougo/neocomplete.vim'           " Autocomplete for vim
     endif
@@ -288,10 +290,8 @@ augroup filetype_python
 
     let g:lang = "python"
     if isdirectory("env")
-        " let prefix = "env/bin/"
         let g:lang = "env/bin/python"
     endif
-    " au FileType python nnoremap <leader>x :call RunInTerminal(prefix.'python')<CR>
 augroup END
 
 function! MarkdownStuff()
