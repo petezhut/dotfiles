@@ -65,7 +65,7 @@ inoremap <silent> <leader>c gc
 
 let g:pymode_options_max_line_length = 120
 let g:pymode_options_colorcolumn = 1
-" let g:neomake_python_enabled_markers = ['flake8']
+let g:neomake_python_enabled_markers = ['flake8']
 
 " TagBar
 nmap <F8> :TagbarToggle<CR>

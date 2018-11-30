@@ -113,7 +113,8 @@ augroup filetype_python
     let g:is_virtual_env = $VIRTUAL_ENV
     au BufWritePre *.py normal m`:%s/\s\+$//e ``
     au BufWritePre *.py normal m`:%s/\t/\ \ /e ``
-    map <silent> <leader>f <ESC>:w\|:call Flake8()<CR>
+    nnoremap <silent> <leader>f :Neomake flake8<CR>
+    " map <silent> <leader>f <ESC>:w\|:call Flake8()<CR>
     set nocindent
     syntax on
     set expandtab

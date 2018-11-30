@@ -6,6 +6,3 @@ source $HOME/.config/nvim/config/functions.vimrc
 source $HOME/.config/nvim/config/keys.vimrc
 source $HOME/.config/nvim/config/airline.vimrc
 source $HOME/.config/nvim/config/colorscheme.vimrc
-
-
-
