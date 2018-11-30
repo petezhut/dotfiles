@@ -35,7 +35,8 @@ floating_modifier $altkey
 
 # start a terminal
 # bindsym $altkey+Return exec i3-sensible-terminal
-bindsym $altkey+Return exec lilyterm
+bindsym $altkey+Return exec alacritty
+# bindsym $altkey+Return exec lilyterm
 exec --no-startup-id nm-applet
 # exec --no-startup-id setxkbmap -option caps:swapescape
 bindsym $winkey+l workspace next

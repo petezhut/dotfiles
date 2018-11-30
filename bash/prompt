@@ -16,4 +16,4 @@ WHITE="\[\033[1;37m\]"
 
 
 
-PS1="[$YELLOW \u@\h$LIGHT_CYAN:$GREEN\w $WHITE]\n$LIGHT_GRAY[$PURPLE Branch: $YELLOW\$(vcprompt -f %b)$LIGHT_GRAY ] $ "
+PS1="$(pyenv version-name)[$YELLOW \u@\h$LIGHT_CYAN:$GREEN\w $WHITE]\n$LIGHT_GRAY[$PURPLE Branch: $YELLOW\$(vcprompt -f %b)$LIGHT_GRAY ] $ "
