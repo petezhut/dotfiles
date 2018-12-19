@@ -1,4 +1,5 @@
 if empty(glob('/home/jmcfarland/.vim/autoload/plug.vim'))
+  echo "1"
   silent !curl -fLo /home/jmcfarland/.vim/autoload/plug.vim --create-dirs
     \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
@@ -9,13 +10,15 @@ endif
 "   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 " endif
 
-if empty(glob($HOME."/.config/nvim/autoload/plug.vim"))
-  silent !curl - fLo $HOME."/.config/nvim/autoload/plug.vim" --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+let g:nvim_autoload_path=join([$HOME, ".config/nvim/autoload/plug.vim"], "/")
+if empty(glob(g:nvim_autoload_path))
+  echo "curl -fLo g:nvim_autoload_path --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
+  silent !curl -fLo $HOME."/.config/nvim/autoload/plug.vim" --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
 " Plugins {
-call plug#begin($HOME."/.config/nvim/plugged")  "
+call plug#begin($HOME.'/.config/nvim/plugged')  "
     Plug 'airblade/vim-gitgutter'               " Show git changes
     Plug 'altercation/vim-colors-solarized'     " Solarized stuff
     Plug 'ctrlpvim/ctrlp.vim'                   " Fuzzy file finder
@@ -71,5 +74,7 @@ call plug#begin($HOME."/.config/nvim/plugged")  "
       Plug 'roxma/vim-hug-neovim-rpc'
     endif
     Plug 'ternjs/tern_for_vim', { 'do': 'npm install' }
+     Plug 'patstockwell/vim-monokai-tasty'
+
 call plug#end()
 " }

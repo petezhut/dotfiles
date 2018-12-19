@@ -60,10 +60,9 @@ let g:Email = 'someone@somewhere.com'
 let mapleader = ","
 let g:mapleader = ","
 let g:editor_name = 'vim'
-let g:mapleader = ','
 let g:max_cols = 35
-let g:neovim2_venv = $WORKON_HOME."/neovim2/bin/python"
-let g:neovim3_venv = $WORKON_HOME."/neovim3/bin/python"
+let g:neovim2_venv = $WORKON_HOME.'/neovim2/bin/python'
+let g:neovim3_venv = $WORKON_HOME.'/neovim3/bin/python'
 
 if !empty(glob(g:neovim2_venv))
     let g:python_host_prog = g:neovim2_venv
@@ -92,8 +91,6 @@ endif
 if exists('&inccommand')
   set inccommand=split " Turn on live preview substitute
 endif
-
-
 
 
 augroup filetype_python

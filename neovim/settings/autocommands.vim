@@ -12,4 +12,3 @@ autocmd FileType cfg let b:comment_leader = "; "
 autocmd BufRead Dockerfile let b:comment_leader = "# "
 autocmd FileType python let g:lang = "python"
 autocmd FileType go let g:lang = "go run"
-
