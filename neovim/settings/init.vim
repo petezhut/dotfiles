@@ -64,6 +64,8 @@ call plug#begin($HOME.'/.config/nvim/plugged')  "
     Plug 'nightsense/carbonized'
     Plug 'sstallion/vim-wtf'
     Plug 'heavenshell/vim-pydocstring'
+    Plug 'ternjs/tern_for_vim', { 'do': 'npm install' }
+    Plug 'patstockwell/vim-monokai-tasty'
     " This has to be loaded after everything else
     " Setting vim specific autocomplete
     if has('nvim')
@@ -73,8 +75,6 @@ call plug#begin($HOME.'/.config/nvim/plugged')  "
       Plug 'roxma/nvim-yarp'
       Plug 'roxma/vim-hug-neovim-rpc'
     endif
-    Plug 'ternjs/tern_for_vim', { 'do': 'npm install' }
-     Plug 'patstockwell/vim-monokai-tasty'
 
 call plug#end()
 " }
