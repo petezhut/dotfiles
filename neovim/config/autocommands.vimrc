@@ -6,6 +6,7 @@ autocmd InsertEnter * highlight CursorLine guibg=#000050 guifg=fg
 autocmd InsertLeave * highlight CursorLine guibg=#004000 guifg=fg
 autocmd BufWritePre * %s/\s\+$//e
 autocmd! BufWritePost * Neomake
+autocmd BufRead *.md call MarkdownStuff()
 autocmd FileType markdown call MarkdownStuff()
 autocmd BufRead .nvimrc let b:comment_leader = "\" "
 autocmd FileType cfg let b:comment_leader = "; "
