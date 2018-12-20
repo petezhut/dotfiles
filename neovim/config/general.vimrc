@@ -105,9 +105,9 @@ augroup filetype_python
     let g:pymode_lint = 0
     let g:pymode_virtualenv=1
     let g:pymode_rope=0
-    "let b:ale_fix_on_save = 1
-    "let b:ale_linters = ['flake8', 'pylint']
-    "let b:ale_fixers = ['autopep8', 'yapf']
+    let b:ale_fix_on_save = 0
+    let b:ale_linters = ['flake8', 'pylint']
+    let b:ale_fixers = ['autopep8', 'yapf']
     let prefix = ''
     let b:comment_leader = "# "
     let g:is_virtual_env = $VIRTUAL_ENV
