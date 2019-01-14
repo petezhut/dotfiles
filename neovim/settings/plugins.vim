@@ -29,7 +29,7 @@ set signcolumn=yes
 map <leader>e :NERDTreeToggle<CR>               " Nerdtree really is great, isn't it?
 
 let NERDTreeShowBookmarks=1
-let NERDTreeIgnore=['\.png$','\.py[cd]$','\~$','\.swo$','\.swp$','^\.git$','^\.hg$','^\.svn$','\.bzr$','^\.ropeproject$']
+let NERDTreeIgnore=['\.pyc$','\.png$','\.py[cd]$','\~$','\.swo$','\.swp$','^\.git$','^\.hg$','^\.svn$','\.bzr$','^\.ropeproject$']
 let NERDTreeChDirMode=0
 let NERDTreeQuitOnOpen=0
 let NERDTreeMouseMode=2
@@ -61,7 +61,6 @@ autocmd FileType nerdtree setlocal nolist
 " }
 " colorscheme vividchalk
 colorscheme Spink
-nmap <leader>v :e /home/jmcfarland/.nvimrc<CR>
 
 inoremap <silent> <leader>c gc
 
