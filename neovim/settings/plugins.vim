@@ -29,7 +29,7 @@ set signcolumn=yes
 map <leader>e :NERDTreeToggle<CR>               " Nerdtree really is great, isn't it?
 
 let NERDTreeShowBookmarks=1
-let NERDTreeIgnore=['\.png$','\.py[cd]$','\~$','\.swo$','\.swp$','^\.git$','^\.hg$','^\.svn$','\.bzr$','^\.ropeproject$']
+let NERDTreeIgnore=['\.pyc$','\.png$','\.py[cd]$','\~$','\.swo$','\.swp$','^\.git$','^\.hg$','^\.svn$','\.bzr$','^\.ropeproject$']
 let NERDTreeChDirMode=0
 let NERDTreeQuitOnOpen=0
 let NERDTreeMouseMode=2
@@ -61,24 +61,24 @@ autocmd FileType nerdtree setlocal nolist
 " }
 " colorscheme vividchalk
 colorscheme Spink
-nmap <leader>v :e /home/jmcfarland/.nvimrc<CR>
 
 inoremap <silent> <leader>c gc
 
 let g:pymode_options_max_line_length = 120
 let g:pymode_options_colorcolumn = 1
 let g:neomake_python_enabled_markers = ['flake8']
+let g:pymode_lint_ignore = "E111,E501,W"
 
 " TagBar
 nmap <F8> :TagbarToggle<CR>
 let g:tagbar_autofocus = 1
 let g:tagbar_autoclose = 0
 let g:tagbar_show_linenumbers = -1
-let g:tagbar_left = 1
+let g:tagbar_left = 0
 let g:tagbar_width = 60
 
 function! AutoOpenTagBar()
-    :call tagbar#autoopen(0)
+    :call tagbar#autoopen(1)
 endfunction
 
 " ALE Linting

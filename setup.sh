@@ -26,7 +26,7 @@ cat /dev/zero | ssh-keygen -q -N ""
 # Vimrc/NVimrc connection
 [ ! -f ${HOME}/.vimrc ] && ln -s ${NVIM_DIR}/init.vim ${HOME}/.vimrc
 [ ! -f ${HOME}/.nvimrc ] && ln -s ${NVIM_DIR}/init.vim ${HOME}/.nvimrc
-vim +PlugInstall +qall
+nvim +PlugInstall +qall
 
 # Copying my I3 configuration
 [ ! -d ${I3_CONFIG} ] && ln -s ${DOTFILES_DIR}/i3 ${I3_CONFIG}

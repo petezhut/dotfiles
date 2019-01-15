@@ -1,4 +1,5 @@
 
+
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
     alias ls='ls --color=auto'
@@ -14,8 +15,8 @@ alias pipupdate="pip install pip --upgrade; pip freeze --local | grep -v '^\-e' 
 alias nv="$EDITOR"
 alias tmux="tmux -2 attach || tmux -2 new"
 alias mount="mount | column -t"
-alias ls="$([ -f $CARGO_PATH/exa ] && echo "$CARGO_PATH/exa -lh --git --ignore-glob '*.pyc'" ||  echo "/bin/ls")"
-alias python="/usr/local/bin/python3"
+alias ls="$([ -f /usr/local/bin/exa ] && echo "/usr/local/bin/exa -lh --git --ignore-glob '*.pyc'" ||  echo "/bin/ls")"
+#alias python="/usr/local/bin/python3"
 alias py3="/usr/local/bin/python3"
 [ -f ~/.local/bash_aliases ] && source ~/.local/bash_aliases
 
@@ -43,20 +44,14 @@ remove_images() {
   docker rmi $(docker images -q)
 }
 
-sys-update () {
+update() {
   sudo apt update
-  sudo apt -y upgrade
-  sudo apt -y dist-upgrade
-  sudo apt -y autoremove
+  sudo apt -y upgrade; sudo apt -y dist-upgrade; sudo apt -y autoremove
+  rustupdate
+  goupdate
+  neovim_python_update
+  $(which nvim) +PlugInstall +qall
 }
- stringer () {
-   cd ~/Docker/stringer/
-   docker-compose pull
-   docker-compose start
-   cd -
-}
-alias update="sys-update; stringer"
-
 
 mkcd () {
   mkdir -p $1
