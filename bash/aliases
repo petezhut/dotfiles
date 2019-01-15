@@ -58,3 +58,8 @@ sys-update () {
 alias update="sys-update; stringer"
 
 
+mkcd () {
+  mkdir -p $1
+  cd $1
+}
+
