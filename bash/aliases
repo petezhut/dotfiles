@@ -15,8 +15,8 @@ alias pipupdate="pip install pip --upgrade; pip freeze --local | grep -v '^\-e' 
 alias nv="$EDITOR"
 alias tmux="tmux -2 attach || tmux -2 new"
 alias mount="mount | column -t"
-alias ls="$([ -f $CARGO_PATH/exa ] && echo "$CARGO_PATH/exa -lh --git --ignore-glob '*.pyc'" ||  echo "/bin/ls")"
-alias python="/usr/local/bin/python3"
+alias ls="$([ -f /usr/local/bin/exa ] && echo "/usr/local/bin/exa -lh --git --ignore-glob '*.pyc'" ||  echo "/bin/ls")"
+#alias python="/usr/local/bin/python3"
 alias py3="/usr/local/bin/python3"
 [ -f ~/.local/bash_aliases ] && source ~/.local/bash_aliases
 
@@ -51,5 +51,10 @@ update() {
   goupdate
   neovim_python_update
   $(which nvim) +PlugInstall +qall
+}
+
+mkcd () {
+  mkdir -p $1
+  cd $1
 }
 

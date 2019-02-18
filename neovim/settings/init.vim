@@ -60,6 +60,7 @@ call plug#begin(join([$HOME, '.config/nvim/plugged'], "/"))
     Plug 'heavenshell/vim-pydocstring'
     Plug 'ternjs/tern_for_vim', { 'do': 'npm install' }
     Plug 'patstockwell/vim-monokai-tasty'
+    Plug 'Nequo/vim-allomancer'
     " This has to be loaded after everything else
     " Setting vim specific autocomplete
     if has('nvim')
